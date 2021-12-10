@@ -15,10 +15,9 @@ export default class Facebook extends Component {
     email: "",
     picture: ""
   };
-  
   responseFacebook = response => {
-    // login เก็บ data response ลง local storage ;
-    
+    // console.log(response);
+
     this.setState({
       isLoggedIn: true,
       userID: response.userID,
@@ -26,8 +25,7 @@ export default class Facebook extends Component {
       email: response.email,
       picture: response.picture.data.url
     });
-  };
- 
+
     localStorage.setItem('isLoggedIn', true);
     localStorage.setItem('userID', response.userID);
     localStorage.setItem('name', response.name);
@@ -48,7 +46,6 @@ export default class Facebook extends Component {
     }
   }
 
-
   componentClicked = () => console.log("clicked");
 
   logoutFacebook = () => {
@@ -65,16 +62,14 @@ export default class Facebook extends Component {
     localStorage.setItem('name', '');
     localStorage.setItem('email', '');
     localStorage.setItem('picture', '');
-    
+
   }
 
   render() {
     let fbContent;
-
     if (this.state.isLoggedIn === false) {
       this.getLocalStorageLogin();
     }
-    
     if (this.state.isLoggedIn) {
       fbContent = (
         <div
@@ -89,9 +84,9 @@ export default class Facebook extends Component {
             backgroundImage: 'linear-gradient(45deg, rgba(218, 132, 230, 0.84) 0%, rgba(179, 0, 89, 1) 83%)'
           }}
         >
-          <img src={JSON.parse(localStorage.getItem('user')).picture.data.url} alt />
-          <h2>Welcome {" "}{JSON.parse(localStorage.getItem('user')).name}</h2>
- 	        email: {JSON.parse(localStorage.getItem('user')).email}
+          <img src={this.state.picture} alt={this.state.name} />
+          <h2>Welcome {this.state.name}</h2>
+       email: {this.state.email}
           <div className="my-3"><a className="btn btn-danger" href="/" onClick={this.logoutFacebook}>Logout</a></div>
           <BrowserRouter>
             <br /><br /><div className="btn-group btn-group-lg"><ButtonRegister /><ButtonShowdata /></div>
@@ -112,7 +107,7 @@ export default class Facebook extends Component {
           }}
         >
           <FacebookLogin
-            appId="1302332123549769"
+            appId="265728455402624"
             autoLoad={false}
             fields="name,email,picture"
             onClick={this.componentClicked}
