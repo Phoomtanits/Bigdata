@@ -27,6 +27,26 @@ export default class Facebook extends Component {
       picture: response.picture.data.url
     });
   };
+  
+    localStorage.setItem('isLoggedIn', true);
+    localStorage.setItem('userID', response.userID);
+    localStorage.setItem('name', response.name);
+    localStorage.setItem('email', response.email);
+    localStorage.setItem('picture', response.picture.data.url);
+
+  };
+
+  getLocalStorageLogin = () => {
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      this.setState({
+        isLoggedIn: true,
+        userID: localStorage.getItem('userID'),
+        name: localStorage.getItem('name'),
+        email: localStorage.getItem('email'),
+        picture: localStorage.getItem('picture')
+      });
+    }
+  }
 
 
   componentClicked = () => console.log("clicked");
