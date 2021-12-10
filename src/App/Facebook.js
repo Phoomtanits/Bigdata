@@ -18,7 +18,7 @@ export default class Facebook extends Component {
   
   responseFacebook = response => {
     // login เก็บ data response ลง local storage ;
-    localStorage.setItem('user',JSON.stringify(response))
+    
     this.setState({
       isLoggedIn: true,
       userID: response.userID,
@@ -27,7 +27,7 @@ export default class Facebook extends Component {
       picture: response.picture.data.url
     });
   };
-  
+ 
     localStorage.setItem('isLoggedIn', true);
     localStorage.setItem('userID', response.userID);
     localStorage.setItem('name', response.name);
@@ -59,13 +59,23 @@ export default class Facebook extends Component {
       email: '',
       picture: ''
     });
+    
+    localStorage.setItem('isLoggedIn', false);
+    localStorage.setItem('userID', '');
+    localStorage.setItem('name', '');
+    localStorage.setItem('email', '');
+    localStorage.setItem('picture', '');
+    
   }
 
   render() {
     let fbContent;
 
-    //check data in localstorage ว่ามีการ login เข้ามาหรือไม่ 
-    if (localStorage.getItem('user')) {
+    if (this.state.isLoggedIn === false) {
+      this.getLocalStorageLogin();
+    }
+    
+    if (this.state.isLoggedIn) {
       fbContent = (
         <div
           style={{
